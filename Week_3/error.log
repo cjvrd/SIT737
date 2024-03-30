@@ -1,2 +1,5 @@
 {"level":"error","message":"cannot divide by zero","service":"calculate-service"}
 {"level":"error","message":"cannot divide by zero","service":"calculate-service"}
+{"level":"error","message":"n2 is incorrectly defined","service":"calculate-service"}
+{"level":"error","message":"squareroot operation does not require n2","service":"calculate-service"}
+{"level":"error","message":"n2 is not defined for this operation","service":"calculate-service"}

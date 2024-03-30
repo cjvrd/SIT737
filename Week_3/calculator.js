@@ -3,67 +3,95 @@ const router = express.Router(); //calling express router
 const winston = require('winston'); //specifies using winston module
 
 const logger = winston.createLogger({ //creates the winston logger and defines the logic
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'calculate-service' },
-  transports: [
-    //Write all logs with importance level of `error` or less to `error.log`
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    //Write all logs with importance level of `info` or less to `combined.log`
-    new winston.transports.File({ filename: 'combined.log' }),
-  ],
+	level: 'info',
+	format: winston.format.json(),
+	defaultMeta: { service: 'calculate-service' },
+	transports: [
+		//Write all logs with importance level of `error` or less to `error.log`
+		new winston.transports.File({ filename: 'error.log', level: 'error' }),
+		//Write all logs with importance level of `info` or less to `combined.log`
+		new winston.transports.File({ filename: 'combined.log' }),
+	],
 });
 
 logger.add(new winston.transports.Console({ //logger
-  format: winston.format.simple(),
+	format: winston.format.simple(),
 }));
 
 const calculate = (operation, n1, n2) => { //this function takes in the operation param from the endpoint (add, sub, mult, div) and two numbers, then performs arithmetic depending on inputs
-  switch (operation) {
-    case 'add':
-      return n1 + n2;
-    case 'subtract':
-      return n1 - n2;
-    case 'multiply':
-      return n1 * n2;
-    case 'divide':
-      if (n2 === 0) { //handling divide by zero error
-        logger.error("cannot divide by zero");
-        throw new Error("cannot divide by zero");
-      }
-      return n1 / n2;
-    default:
-      throw new Error('Invalid operation');
-  }
+	switch (operation) {
+		case 'add':
+			return n1 + n2;
+		case 'subtract':
+			return n1 - n2;
+		case 'multiply':
+			return n1 * n2;
+		case 'divide':
+			if (n2 === 0) { //handling divide by zero error
+				logger.error("cannot divide by zero");
+				throw new Error("cannot divide by zero");
+			}
+			return n1 / n2;
+		case 'exponentiate':
+			return n1 ** n2;
+		case 'squareroot':
+			if (n1 < 0) {
+				logger.error("cannot calculate square root of a negative number");
+				throw new Error("cannot calculate square root of a negative number");
+			}
+			return Math.sqrt(n1);
+		case 'modulo':
+			if (n2 === 0) { //handling divide by zero error
+				logger.error("cannot divide by zero");
+				throw new Error("cannot divide by zero");
+			}
+			return n1 % n2;
+		default:
+			throw new Error('Invalid operation');
+	}
 };
 
-router.get("/:operation/:n1/:n2", (req, res) => { //endpoint that takes in the url params, passes them to the calculate function, then returns the result as json
-  try {
-    const operation = req.params.operation; //endpoints url params
-    const n1 = parseFloat(req.params.n1);
-    const n2 = parseFloat(req.params.n2);
+//endpoint that takes in the url params, passes them to the calculate function, then returns the result as json  
+router.get("/:operation/:n1/:n2?", (req, res) => {  //? after n2 makes it optional allowing for squareroot
+	try {
+		const operation = req.params.operation;
+		const n1 = parseFloat(req.params.n1);
+		let n2;
 
-    if (isNaN(n1)) { //NaN error handling
-      logger.error("n1 is incorrectly defined");
-      throw new Error("n1 incorrectly defined");
-    }
+		// Check if n2 is provided, if not set it to undefined
+		if (req.params.n2 !== undefined) {
+			n2 = parseFloat(req.params.n2);
+		}
 
-    if (isNaN(n2)) {
-      logger.error("n2 is incorrectly defined");
-      throw new Error("n2 incorrectly defined");
-    }
+		if (isNaN(n1)) {
+			logger.error("n1 is incorrectly defined");
+			throw new Error("n1 incorrectly defined");
+		}
 
-    logger.info(`Parameters ${n1} and ${n2} received for ${operation}`); //logging each API call
+		//if the operation is squareroot, ensure that n2 is undefined
+		if (operation === 'squareroot' && req.params.n2 !== undefined) {
+			logger.error("squareroot operation does not require n2");
+			throw new Error("squareroot operation does not require n2");
+		}
 
-    const result = calculate(operation, n1, n2); //calls function
-    res.status(200).json({ statuscode: 200, data: result }); //returns result as json and status code
+		//if the operation is not squareroot and n2 is undefined, throw an error
+		if (operation !== 'squareroot' && req.params.n2 === undefined) {
+			logger.error("n2 is not defined for this operation");
+			throw new Error("n2 is not defined for this operation");
+		}
 
-  } catch (error) { //error handling
-    console.error(error)
-    res.status(500).json({ statuscode: 500, msg: error.toString() })
-  }
+		logger.info(`Parameters ${n1} and ${n2} received for ${operation}`); //logging each API call
+
+		const result = calculate(operation, n1, n2); //calls function
+		res.status(200).json({ statuscode: 200, data: result }); //returns result as json and status code
+		
+	} catch (error) { //error handling
+		console.error(error)
+		res.status(500).json({ statuscode: 500, msg: error.toString() })
+	}
 });
 
+module.exports = router;
 //BELOW IS CODE I HAD WRITTEN BEFORE COMPRESSING IT INTO THE ONE FUNCTION ABOVE
 
 // const add = (n1, n2) => { //function to add two numbers
@@ -190,5 +218,3 @@ router.get("/:operation/:n1/:n2", (req, res) => { //endpoint that takes in the u
 //     res.status(500).json({ statuscode: 500, msg: error.toString() })
 //   }
 // });
-
-module.exports = router;
