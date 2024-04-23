@@ -1,0 +1,28 @@
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for addition","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for subtraction","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for division","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for multiplication","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for multiplication","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for division","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 0 received for division","service":"calculate-service"}
+{"level":"info","message":"Parameters 0 and 1 received for division","service":"calculate-service"}
+{"level":"error","message":"cannot divide by zero","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for subtract","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for add","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for divide","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 0 received for divide","service":"calculate-service"}
+{"level":"error","message":"cannot divide by zero","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for subtract","service":"calculate-service"}
+{"level":"info","message":"Parameters 10 and 1 received for squareroot","service":"calculate-service"}
+{"level":"info","message":"Parameters 10 and 0 received for squareroot","service":"calculate-service"}
+{"level":"error","message":"n2 is incorrectly defined","service":"calculate-service"}
+{"level":"info","message":"Parameters 10 and undefined received for squareroot","service":"calculate-service"}
+{"level":"error","message":"squareroot operation does not require n2","service":"calculate-service"}
+{"level":"error","message":"n2 is not defined for this operation","service":"calculate-service"}
+{"level":"info","message":"Parameters 10 and 2 received for subtract","service":"calculate-service"}
