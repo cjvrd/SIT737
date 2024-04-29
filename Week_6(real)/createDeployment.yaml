@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: mynode
-        image: cjvrd/week5app:1.1.1
+        image: cjvrd/week5app:1.1.2
         ports:
         - containerPort: 3000

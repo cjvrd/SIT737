@@ -26,3 +26,4 @@
 {"level":"error","message":"squareroot operation does not require n2","service":"calculate-service"}
 {"level":"error","message":"n2 is not defined for this operation","service":"calculate-service"}
 {"level":"info","message":"Parameters 10 and 2 received for subtract","service":"calculate-service"}
+{"level":"info","message":"Parameters 234 and 234 received for divide","service":"calculate-service"}
